@@ -1,14 +1,11 @@
-/file_search.obj
-/src/file_search.obj   
 /main.exe
 /main.ilk
 /main.obj
 /main.pdb
 /vc140.pdb
-/src/Threading.obj
-/src/file_search.obj
 /src/main.exe
 /src/main.obj
 /src/main.pdb
 /src/vc140.pdb
+/src/ThreadedFileSearch.obj
 /build/
