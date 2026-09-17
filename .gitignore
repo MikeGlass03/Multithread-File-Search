@@ -1,4 +1,5 @@
 /file_search.obj
+/src/file_search.obj   
 /main.exe
 /main.ilk
 /main.obj
@@ -10,3 +11,4 @@
 /src/main.obj
 /src/main.pdb
 /src/vc140.pdb
+/build/

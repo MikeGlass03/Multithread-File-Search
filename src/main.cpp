@@ -2,21 +2,21 @@
 #include <filesystem>
 #include <string>
 
-#include "Threading.hpp"
+#include "ThreadedFileSearch.hpp"
 
 int main() {
     std::string file_name;
     std::string directory;
 
     std::cout << "Input the drive or directory to begin search (for the whole drive, use C:\\ or D:\\): ";
-    std::cin >> directory;
+    std::getline(std::cin, directory);
 
     if (directory.empty()) {
         directory = "C:\\";
     }
 
     std::cout << "Input the name of the file to search for: ";
-    std::cin >> file_name;
+    std::getline(std::cin, file_name);
 
     std::filesystem::path root_path = directory;
 
@@ -25,15 +25,15 @@ int main() {
         return 1;
     }
 
-    auto matches = search_files_threaded(root_path, file_name);
+    vector<filesystem::path> matches = search_files_threaded(root_path, file_name);
 
     if (matches.empty()) {
         std::cout << "Could not find the file you entered in " << root_path << "\n";
         return 1;
     }
 
-    for (const auto& p : matches) {
-        std::cout << "Success: " << p << "\n";
+    for (const filesystem::path& p : matches) {
+        std::cout << "Success, Here is the full path: " << p << "\n";
     }
 
     return 0;
