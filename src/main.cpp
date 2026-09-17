@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <string>
 
-#include "file_search.hpp"
+#include "Threading.hpp"
 
 int main() {
     std::string file_name;
@@ -25,7 +25,7 @@ int main() {
         return 1;
     }
 
-    auto matches = search_files(root_path, file_name);
+    auto matches = search_files_threaded(root_path, file_name);
 
     if (matches.empty()) {
         std::cout << "Could not find the file you entered in " << root_path << "\n";

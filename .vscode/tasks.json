@@ -12,7 +12,8 @@
                 "/I${workspaceFolder}\\include",
                 "/Fe${workspaceFolder}\\main.exe",
                 "${workspaceFolder}\\src\\main.cpp",
-                "${workspaceFolder}\\src\\file_search.cpp"
+                "${workspaceFolder}\\src\\file_search.cpp",
+                "${workspaceFolder}\\src\\Threading.cpp"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"

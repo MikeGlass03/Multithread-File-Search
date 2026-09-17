@@ -1,12 +1,10 @@
 #include "file_search.hpp"
 
-std::vector<std::filesystem::path> search_files(
-    const std::filesystem::path& root,
-    const std::string& target) {
+vector<filesystem::path> search_files(const filesystem::path& root, const string& target) {
 
-    std::vector<std::filesystem::path> matches;
+    vector<filesystem::path> matches;
 
-    for (const auto& entry : std::filesystem::recursive_directory_iterator(root)) {
+    for (const filesystem::directory_entry& entry : filesystem::recursive_directory_iterator(root)) {
         if (!entry.is_regular_file()) {
             continue;
         }

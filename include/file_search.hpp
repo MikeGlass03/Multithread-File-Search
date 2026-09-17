@@ -1,5 +1,9 @@
+#pragma once
+
 #include <filesystem>
 #include <string>
 #include <vector>
 
-std::vector<std::filesystem::path> search_files(const std::filesystem::path& root, const std::string& target);
+using namespace std;
+
+vector<filesystem::path> search_files(const filesystem::path& root, const string& target);
