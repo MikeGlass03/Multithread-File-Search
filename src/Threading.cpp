@@ -8,7 +8,7 @@ vector<filesystem::path> search_files_threaded(const filesystem::path& root, con
 	vector<filesystem::path> matches;
 	vector<filesystem::path> subdirectories;
 
-	for (const auto& entry : filesystem::directory_iterator(root)) {
+	for (const filesystem::directory_entry& entry : filesystem::directory_iterator(root)) {
 		if (entry.is_directory()) {
 			subdirectories.push_back(entry.path());
 		} 
