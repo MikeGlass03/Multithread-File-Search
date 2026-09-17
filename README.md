@@ -4,7 +4,7 @@ This project was built to practice C++ filesystem operations, multithreading, sy
 
 ## Installation and use
 
-Requires:
+```Requires:
 C++17-compatible compiler
 CMake
 
@@ -19,4 +19,4 @@ cmake --build build
 Example Run: 
 
 Input the drive or directory to begin search: C:\Users 
-Input the name of the file to search for: example.txt Success: "C:\Users\Example\Documents\example.txt"
+Input the name of the file to search for: example.txt Success: "C:\Users\Example\Documents\example.txt"```
