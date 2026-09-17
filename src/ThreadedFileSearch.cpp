@@ -59,6 +59,7 @@ class FileTaskQueue {
 vector<filesystem::path> search_files_threaded(const filesystem::path& root, const string& target) {
     
     vector<filesystem::path> matches;
+    filesystem::path target_path = target;
     FileTaskQueue task_queue;
     mutex matches_mutex;
     constexpr unsigned int max_worker_threads = 8;
@@ -77,7 +78,7 @@ vector<filesystem::path> search_files_threaded(const filesystem::path& root, con
             
 			filesystem::path file;
             while (task_queue.pop(file)) {
-                if (file.filename().string() == target) {
+                if (file.filename() == target_path || file.stem() == target_path) {
                     lock_guard<mutex> lock(matches_mutex);
                     matches.push_back(file);
                 }

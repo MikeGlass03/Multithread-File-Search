@@ -7,5 +7,5 @@
 /src/main.obj
 /src/main.pdb
 /src/vc140.pdb
-/src/ThreadedFileSearch.obj
 /build/
+ThreadedFileSearch.obj

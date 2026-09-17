@@ -15,7 +15,7 @@ int main() {
         directory = "C:\\";
     }
 
-    std::cout << "Input the name of the file to search for: ";
+    std::cout << "Input the file name, (with or without its extension, but case sensitive): ";
     std::getline(std::cin, file_name);
 
     std::filesystem::path root_path = directory;
