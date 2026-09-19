@@ -18,6 +18,7 @@ class FileTaskQueue {
         bool finished = false;
 
     public:
+        //Adds file path to queue and wakes up worker
         void push(const filesystem::path& path) {
             unique_lock<mutex> lock(queue_mutex);
             space_available.wait(lock, [this]() {
@@ -31,7 +32,8 @@ class FileTaskQueue {
             tasks.push(path);
             task_available.notify_one();
         }
-
+        
+        //Removes file path from queue and signals space is available
         bool pop(filesystem::path& path) {
             unique_lock<mutex> lock(queue_mutex);
             task_available.wait(lock, [this]() {
@@ -48,6 +50,7 @@ class FileTaskQueue {
             return true;
         }
 
+        //Signal that tasks are done, wakes dormant workers so queue can complete
         void finish() {
             lock_guard<mutex> lock(queue_mutex);
             finished = true;
@@ -65,14 +68,17 @@ vector<filesystem::path> search_files_threaded(const filesystem::path& root, con
     constexpr unsigned int max_worker_threads = 8;
     unsigned int thread_count = thread::hardware_concurrency();
 
+    //I think I need this in case something goes wrong in hardware_concurrency, no computers have 0 cores
     if (thread_count == 0) {
         thread_count = 4;
     }
 
+    //Finds thread count available to queue, limited to 8 for purposes of this project
     thread_count = min(thread_count, max_worker_threads);
 
     vector<thread> workers;
 
+    //Runs queue to consume file paths
     for (unsigned int i = 0; i < thread_count; ++i) {
         workers.emplace_back([&]() {
             
@@ -86,10 +92,12 @@ vector<filesystem::path> search_files_threaded(const filesystem::path& root, con
         });
     }
 
+    //Error handling, essentially stores errors without throwing exceptions due to access issues
     error_code error;
     filesystem::recursive_directory_iterator iterator(root, filesystem::directory_options::skip_permission_denied, error);
     filesystem::recursive_directory_iterator end;
 
+    //Gives tasks to threads and ensures file search doesn't go down paths without access
     while (iterator != end) {
         if (!error && iterator->is_regular_file(error)) {
             task_queue.push(iterator->path());
@@ -100,6 +108,7 @@ vector<filesystem::path> search_files_threaded(const filesystem::path& root, con
 
     task_queue.finish();
 
+    //Waits till all threads to be finished, prevents function from jumping to return statement
     for (thread& worker : workers) {
         worker.join();
     }
